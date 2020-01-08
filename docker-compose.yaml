@@ -5,15 +5,15 @@ services:
       context: mongo
     image: ${REPO}/rs-mongodb:${TAG}
     networks:
-      - robot-shop
+      - robot
   redis:
     image: redis:4.0.6
     networks:
-      - robot-shop
+      - robot
   rabbitmq:
     image: rabbitmq:3.7-management-alpine
     networks:
-      - robot-shop
+      - robot
   catalogue:
     build:
       context: catalogue
@@ -21,7 +21,7 @@ services:
     depends_on:
       - mongodb
     networks:
-      - robot-shop
+      - robot
   user:
     build:
       context: user
@@ -30,7 +30,7 @@ services:
       - mongodb
       - redis
     networks:
-      - robot-shop
+      - robot
   cart:
     build:
       context: cart
@@ -38,7 +38,7 @@ services:
     depends_on:
       - redis
     networks:
-      - robot-shop
+      - robot
   mysql:
     build:
       context: mysql
@@ -46,7 +46,7 @@ services:
     cap_add:
       - NET_ADMIN
     networks:
-      - robot-shop
+      - robot
   shipping:
     build:
       context: shipping
@@ -54,13 +54,13 @@ services:
     depends_on:
       - mysql
     networks:
-      - robot-shop
+      - robot
   ratings:
     build:
       context: ratings
     image: ${REPO}/rs-ratings:${TAG}
     networks:
-      - robot-shop
+      - robot
     depends_on:
       - mysql
   payment:
@@ -70,7 +70,7 @@ services:
     depends_on:
       - rabbitmq
     networks:
-      - robot-shop
+      - robot
     # Uncomment to change payment gateway
     #environment:
       #PAYMENT_GATEWAY: "https://www.worldpay.com"
@@ -81,7 +81,7 @@ services:
     depends_on:
       - rabbitmq
     networks:
-      - robot-shop
+      - robot
   web:
     build:
       context: web
@@ -94,7 +94,7 @@ services:
     ports:
       - "8001:8001"
     networks:
-      - robot-shop
+      - robot
     # Uncomment to enable Instana EUM
     # environment:
       # INSTANA_EUM_KEY: <your eum key>
@@ -102,5 +102,5 @@ services:
       # INSTANA_EUM_REPORTING_URL: https://eum-eu-west-1.instana.io
 
 networks:
-  robot-shop:
+  robot:
 
